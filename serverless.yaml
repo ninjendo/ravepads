@@ -14,16 +14,16 @@ custom:
     dev:
       roleEnv: 'dev'
       memorySize: 128
-      lambda_role: arn:aws:iam::621709793940:role/ravepads-lambda
+      lambda_role: arn:aws:iam::336658932923:role/ravepads-lambda-role
       #authorizer_arn: arn:aws:lambda:us-west-2:659764204348:function:bfc-authorizer-dev
       environment:
         LOG_LEVEL: INFO
 
 functions:
   greeter:
-    handler: com.smartsheet.uar.Application
+    handler: com.olryt.rave.Application
     #role: ${self:custom.env.${self:provider.stage}.lambda_role}
-    role: arn:aws:iam::621709793940:role/ravepads-lambda
+    role: arn:aws:iam::336658932923:role/ravepads-lambda-role
     events:
       - http:
           path: home/greet
@@ -36,25 +36,25 @@ functions:
           cors: true # allows cors
           operationId: greetHome
 #  uar_resource:
-#    handler: com.smartsheet.uar.Application
+#    handler: com.olryt.rave.Application
 #    #role: ${self:custom.env.${self:provider.stage}.lambda_role}
-#    role: arn:aws:iam::232900052464:role/SmartsheetFormsUARLambdaRole
+#    role: arn:aws:iam::232900052464:role/OlrytFormsRaveLambdaRole
 #    events:
-#      - httpApi: 'GET /grids/{gridId}/uars'
+#      - httpApi: 'GET /grids/{gridId}/Rave'
       - http:
           path: grids
           method: GET # Http metodod [GET,POST,etc]
           cors: true # allows cors
           operationId: allGrids
       - http:
-          path: grids/{gridId}/uars
+          path: grids/{gridId}/Rave
           method: ANY
           cors: true
           request:
             parameters:
               paths:
                 gridId: true
-          operationId: getAllUars
+          operationId: getAllRave
       - http:
           path: home/greet/{name}
           method: GET
