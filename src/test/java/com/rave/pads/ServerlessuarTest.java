@@ -1,4 +1,4 @@
-package com.smartsheet.uar;
+package com.rave.pads;
 
 import io.micronaut.runtime.EmbeddedApplication;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;

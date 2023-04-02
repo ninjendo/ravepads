@@ -84,9 +84,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/ravepads/dev/1680405897695-2023-04-02T03:24:57.695Z/target/ravepads-0.1.jar"
+          "S3Key": "serverless/ravepads/dev/1680406418625-2023-04-02T03:33:38.625Z/target/ravepads-0.1.jar"
         },
-        "Handler": "com.olryt.rave.Application",
+        "Handler": "com.rave.pads.Application",
         "Runtime": "java11",
         "FunctionName": "ravepads-dev-greeter",
         "MemorySize": 1024,
@@ -678,7 +678,7 @@
         "Name": "ravepads-dev | Validate request body and querystring parameters"
       }
     },
-    "ApiGatewayDeployment1680405896934": {
+    "ApiGatewayDeployment1680406417834": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {

@@ -1,5 +1,5 @@
 applicationType: default
-defaultPackage: com.smartsheet.uar
+defaultPackage: com.rave.pads
 testFramework: junit
 sourceLanguage: java
 buildTool: maven

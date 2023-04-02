@@ -21,7 +21,7 @@ custom:
 
 functions:
   greeter:
-    handler: com.olryt.rave.Application
+    handler: com.rave.pads.Application
     #role: ${self:custom.env.${self:provider.stage}.lambda_role}
     role: arn:aws:iam::336658932923:role/ravepads-lambda-role
     events:
@@ -36,9 +36,9 @@ functions:
           cors: true # allows cors
           operationId: greetHome
 #  uar_resource:
-#    handler: com.olryt.rave.Application
+#    handler: com.rave.pads.Application
 #    #role: ${self:custom.env.${self:provider.stage}.lambda_role}
-#    role: arn:aws:iam::232900052464:role/OlrytFormsRaveLambdaRole
+#    role: arn:aws:iam::232900052464:role/RaveFormsRaveLambdaRole
 #    events:
 #      - httpApi: 'GET /grids/{gridId}/Rave'
       - http:
