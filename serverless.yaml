@@ -1,0 +1,67 @@
+service: ravepads
+
+provider:
+  name: aws
+  runtime: java11
+  stage: ${opt:stage, 'dev'}
+  region: us-east-1
+
+package:
+  artifact: target/ravepads-0.1.jar
+
+custom:
+  env:
+    dev:
+      roleEnv: 'dev'
+      memorySize: 128
+      lambda_role: arn:aws:iam::621709793940:role/ravepads-lambda
+      #authorizer_arn: arn:aws:lambda:us-west-2:659764204348:function:bfc-authorizer-dev
+      environment:
+        LOG_LEVEL: INFO
+
+functions:
+  greeter:
+    handler: com.smartsheet.uar.Application
+    #role: ${self:custom.env.${self:provider.stage}.lambda_role}
+    role: arn:aws:iam::621709793940:role/ravepads-lambda
+    events:
+      - http:
+          path: home/greet
+          method: GET # Http metodod [GET,POST,etc]
+          cors: true # allows cors
+          operationId: greetHello
+      - http:
+          path: home
+          method: GET # Http metodod [GET,POST,etc]
+          cors: true # allows cors
+          operationId: greetHome
+#  uar_resource:
+#    handler: com.smartsheet.uar.Application
+#    #role: ${self:custom.env.${self:provider.stage}.lambda_role}
+#    role: arn:aws:iam::232900052464:role/SmartsheetFormsUARLambdaRole
+#    events:
+#      - httpApi: 'GET /grids/{gridId}/uars'
+      - http:
+          path: grids
+          method: GET # Http metodod [GET,POST,etc]
+          cors: true # allows cors
+          operationId: allGrids
+      - http:
+          path: grids/{gridId}/uars
+          method: ANY
+          cors: true
+          request:
+            parameters:
+              paths:
+                gridId: true
+          operationId: getAllUars
+      - http:
+          path: home/greet/{name}
+          method: GET
+          cors:
+            headers: '*'
+          request:
+            parameters:
+              paths:
+                name: true
+          operationId: helloName
