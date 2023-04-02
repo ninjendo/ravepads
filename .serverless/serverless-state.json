@@ -96,9 +96,9 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/ravepads/dev/1680405897695-2023-04-02T03:24:57.695Z/target/ravepads-0.1.jar"
+                "S3Key": "serverless/ravepads/dev/1680407267914-2023-04-02T03:47:47.914Z/target/ravepads-0.1.jar"
               },
-              "Handler": "com.olryt.rave.Application",
+              "Handler": "com.rave.pads.Application",
               "Runtime": "java11",
               "FunctionName": "ravepads-dev-greeter",
               "MemorySize": 1024,
@@ -109,14 +109,14 @@
               "GreeterLogGroup"
             ]
           },
-          "GreeterLambdaVersionh6FhASo7gfRKH8nDnXjH5mx3BbjU3NtGlSDSqqfns": {
+          "GreeterLambdaVersionSYLBv7XeBkmgUBfvv2DwRcUyPH31hI3gqo4FlMg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GreeterLambdaFunction"
               },
-              "CodeSha256": "at69HzsFzeVwY4h6caYK20kuKAKp1Q31iKf0B/SIrmk="
+              "CodeSha256": "erXvE093nuu8W+vHVLk5uHgRk24bxnL2L2TcWiGe7gQ="
             }
           },
           "ApiGatewayRestApi": {
@@ -690,7 +690,7 @@
               "Name": "ravepads-dev | Validate request body and querystring parameters"
             }
           },
-          "ApiGatewayDeployment1680405896934": {
+          "ApiGatewayDeployment1680407267162": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -761,7 +761,7 @@
           "GreeterLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GreeterLambdaVersionh6FhASo7gfRKH8nDnXjH5mx3BbjU3NtGlSDSqqfns"
+              "Ref": "GreeterLambdaVersionSYLBv7XeBkmgUBfvv2DwRcUyPH31hI3gqo4FlMg"
             },
             "Export": {
               "Name": "sls-ravepads-dev-GreeterLambdaFunctionQualifiedArn"
@@ -894,7 +894,7 @@
     "pluginsData": {},
     "functions": {
       "greeter": {
-        "handler": "com.olryt.rave.Application",
+        "handler": "com.rave.pads.Application",
         "role": "arn:aws:iam::336658932923:role/ravepads-lambda-role",
         "events": [
           {
@@ -1033,7 +1033,7 @@
         "timeout": 6,
         "runtime": "java11",
         "vpc": {},
-        "versionLogicalId": "GreeterLambdaVersionh6FhASo7gfRKH8nDnXjH5mx3BbjU3NtGlSDSqqfns"
+        "versionLogicalId": "GreeterLambdaVersionSYLBv7XeBkmgUBfvv2DwRcUyPH31hI3gqo4FlMg"
       }
     },
     "configValidationMode": "warn",
@@ -1046,7 +1046,7 @@
       "package": {
         "artifact": "target/ravepads-0.1.jar",
         "artifactsS3KeyDirname": "serverless/ravepads/dev/code-artifacts",
-        "artifactDirectoryName": "serverless/ravepads/dev/1680405897695-2023-04-02T03:24:57.695Z"
+        "artifactDirectoryName": "serverless/ravepads/dev/1680407267914-2023-04-02T03:47:47.914Z"
       },
       "custom": {
         "$ref": "$[\"service\"][\"custom\"]"
@@ -1059,7 +1059,7 @@
     "isDashboardMonitoringPreconfigured": false
   },
   "package": {
-    "artifactDirectoryName": "serverless/ravepads/dev/1680405897695-2023-04-02T03:24:57.695Z",
+    "artifactDirectoryName": "serverless/ravepads/dev/1680407267914-2023-04-02T03:47:47.914Z",
     "artifact": "target/ravepads-0.1.jar"
   }
 }

@@ -104,7 +104,7 @@
           <annotationProcessorPaths combine.children="append">
           </annotationProcessorPaths>
           <compilerArgs>
-            <arg>-Amicronaut.processing.group=com.smartsheet.uar</arg>
+            <arg>-Amicronaut.processing.group=com.rave.pads</arg>
             <arg>-Amicronaut.processing.module=serverlessuar</arg>
           </compilerArgs>
         </configuration>
