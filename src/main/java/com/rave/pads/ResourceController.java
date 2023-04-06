@@ -19,7 +19,7 @@ public class ResourceController {
         return Collections.singletonMap("message", "Hello GRIDS");
     }
 
-    @Get(uri = "/{gridId}/uars", produces = MediaType.APPLICATION_JSON)
+    @Get(uri = "/{gridId}/rave", produces = MediaType.APPLICATION_JSON)
     public HttpResponse all(@PathVariable String gridId) {
         ScheduleUpdate su = new ScheduleUpdate();
         su.setId(gridId);
@@ -27,7 +27,7 @@ public class ResourceController {
     }
 }
 
-//    @Get(uri = "/{gridId}/uars", produces = MediaType.APPLICATION_JSON)
+//    @Get(uri = "/{gridId}/rave", produces = MediaType.APPLICATION_JSON)
 //    public ScheduleUpdate all(@PathVariable String gridId) {
 //        ScheduleUpdate su = new ScheduleUpdate();
 //        su.setId(gridId);

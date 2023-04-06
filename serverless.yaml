@@ -19,6 +19,24 @@ custom:
       environment:
         LOG_LEVEL: INFO
 
+resources:
+  Resources:
+    myDynamoDBTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: uploaded-files-db
+        AttributeDefinitions:
+          - AttributeName: objectkey
+            AttributeType: S
+        KeySchema:
+          - AttributeName: objectkey
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+    MyS3Bucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ravepads-uploaded-files-bucket
+
 functions:
   greeter:
     handler: com.rave.pads.Application
@@ -35,6 +53,32 @@ functions:
           method: GET # Http metodod [GET,POST,etc]
           cors: true # allows cors
           operationId: greetHome
+      - http:
+          path: home/greet/{name}
+          method: GET
+          cors:
+            headers: '*'
+          request:
+            parameters:
+              paths:
+                name: true
+          operationId: helloName
+      - http:
+          path: ai-trainor
+          method: GET # Http metodod [GET,POST,etc]
+          cors: true # allows cors
+          operationId: aiTrainorHome
+      - http:
+          path: ai-trainor/request-upload/{contentType}/{fileName}
+          method: GET
+          cors:
+            headers: '*'
+          request:
+            parameters:
+              paths:
+                contentType: true
+                fileName: true
+          operationId: requestUpload
 #  uar_resource:
 #    handler: com.rave.pads.Application
 #    #role: ${self:custom.env.${self:provider.stage}.lambda_role}
@@ -55,13 +99,3 @@ functions:
               paths:
                 gridId: true
           operationId: getAllRave
-      - http:
-          path: home/greet/{name}
-          method: GET
-          cors:
-            headers: '*'
-          request:
-            parameters:
-              paths:
-                name: true
-          operationId: helloName
