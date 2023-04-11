@@ -42,14 +42,17 @@ public class UploaderController {
     @Get("/request-upload/{contentType}/{fileName}")
     public Map<String, Object> requestUpload(String contentType, String fileName) {
 
-        //String fileName = (String) input.get("fileName");
-        //String contentType = (String) input.get("contentType");
+        // Set the pre-signed URL to expire after 10 mins.
+        java.util.Date expiration = new java.util.Date();
+        long expTimeMillis = expiration.getTime();
+        expTimeMillis += 1000 * 60 * 10;
+        expiration.setTime(expTimeMillis);
 
         // Generate a presigned URL for the file upload
         GeneratePresignedUrlRequest generatePresignedUrlRequest =
                 new GeneratePresignedUrlRequest(BUCKET_NAME, fileName)
                         .withMethod(HttpMethod.PUT)
-                        .withContentType(contentType);
+                        .withExpiration(expiration);
         String presignedUrl = s3Client.generatePresignedUrl(generatePresignedUrlRequest).toString();
         System.out.println("==========presignedUrl: "+presignedUrl);
         System.out.println("==========contentType: "+contentType);
@@ -62,7 +65,7 @@ public class UploaderController {
                 .withPrimaryKey("objectkey", objectkey)
                 .withString("bucketName", BUCKET_NAME)
                 .withString("contentType", contentType));
-        return Collections.singletonMap("message", "presignedUrl: " + presignedUrl);
+        return Collections.singletonMap("message", presignedUrl);
     }
 
     @Get("/pre-process-data/{fileName}")
