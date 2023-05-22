@@ -1,3 +1,5 @@
+This is an ongoing project. The goal of this project is to migrate the springboot application, [RAVe](https://github.com/ninjendo/RAVe), into a micronaut framework. This project is completely serverless and uses AWS lambda for its APIs.
+
 ## How to Run Application
 - install [node.js](https://nodejs.org/en)
 
