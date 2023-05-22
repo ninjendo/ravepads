@@ -32,7 +32,7 @@ public class ResourceControllerTest {
     }
 
     @Test
-    void testGetUars() throws JsonProcessingException {
+    void testGetGrids() throws JsonProcessingException {
         AwsProxyRequest request = new AwsProxyRequest();
         request.setHttpMethod("GET");
         request.setPath("/grids");
@@ -40,15 +40,5 @@ public class ResourceControllerTest {
         assertEquals(200, response.getStatusCode());
         assertEquals("{\"message\":\"Hello GRIDS\"}",  response.getBody());
     }
-
-//    @Test
-//    void testGetUars() throws JsonProcessingException {
-//        AwsProxyRequest request = new AwsProxyRequest();
-//        request.setHttpMethod("GET");
-//        request.setPath("/grids/123/uars");
-//        AwsProxyResponse response = handler.handleRequest(request, lambdaContext);
-//        assertEquals(200, response.getStatusCode());
-//        assertEquals("{\"message\":\"ALL THE UARS\"}",  response.getBody());
-//    }
 
 }

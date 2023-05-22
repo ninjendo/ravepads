@@ -96,27 +96,27 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/ravepads/dev/1680783836467-2023-04-06T12:23:56.467Z/target/ravepads-0.1.jar"
+                "S3Key": "serverless/ravepads/dev/1684445669009-2023-05-18T21:34:29.009Z/target/ravepads-0.1.jar"
               },
               "Handler": "com.rave.pads.Application",
               "Runtime": "java11",
               "FunctionName": "ravepads-dev-greeter",
               "MemorySize": 1024,
               "Timeout": 6,
-              "Role": "arn:aws:iam::336658932923:role/ravepads-lambda-role"
+              "Role": "arn:aws:iam::621709793940:role/ravepads-lambda"
             },
             "DependsOn": [
               "GreeterLogGroup"
             ]
           },
-          "GreeterLambdaVersiontxgJBVOL9DE10aSykkYn7gU0SKeVhxZE9uoM7QplpGY": {
+          "GreeterLambdaVersionP2Yngs2smK4XhdnVYQ0JvdU4VGErRbB5ML6kciQFzGY": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "GreeterLambdaFunction"
               },
-              "CodeSha256": "+2dg7o1mcvgD5U8HVSESR0G95WRyjp5nM6QlbatSzlE="
+              "CodeSha256": "9RpoJHzwitnTpVgQ+yTLz1zXKzyK/74Iu8FU6tloR7U="
             }
           },
           "ApiGatewayRestApi": {
@@ -131,7 +131,7 @@
               "Policy": ""
             }
           },
-          "ApiGatewayResourceHome": {
+          "ApiGatewayResourceHud": {
             "Type": "AWS::ApiGateway::Resource",
             "Properties": {
               "ParentId": {
@@ -140,17 +140,17 @@
                   "RootResourceId"
                 ]
               },
-              "PathPart": "home",
+              "PathPart": "hud",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
             }
           },
-          "ApiGatewayResourceHomeGreet": {
+          "ApiGatewayResourceHudGreet": {
             "Type": "AWS::ApiGateway::Resource",
             "Properties": {
               "ParentId": {
-                "Ref": "ApiGatewayResourceHome"
+                "Ref": "ApiGatewayResourceHud"
               },
               "PathPart": "greet",
               "RestApiId": {
@@ -158,13 +158,37 @@
               }
             }
           },
-          "ApiGatewayResourceHomeGreetNameVar": {
+          "ApiGatewayResourceHudGreetNameVar": {
             "Type": "AWS::ApiGateway::Resource",
             "Properties": {
               "ParentId": {
-                "Ref": "ApiGatewayResourceHomeGreet"
+                "Ref": "ApiGatewayResourceHudGreet"
               },
               "PathPart": "{name}",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceHudProperties": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceHud"
+              },
+              "PathPart": "properties",
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayResourceHudPropertiesStatecodeVar": {
+            "Type": "AWS::ApiGateway::Resource",
+            "Properties": {
+              "ParentId": {
+                "Ref": "ApiGatewayResourceHudProperties"
+              },
+              "PathPart": "{stateCode}",
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
@@ -260,7 +284,7 @@
               }
             }
           },
-          "ApiGatewayMethodHomeGreetOptions": {
+          "ApiGatewayMethodHudGreetOptions": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "AuthorizationType": "NONE",
@@ -298,59 +322,14 @@
                 ]
               },
               "ResourceId": {
-                "Ref": "ApiGatewayResourceHomeGreet"
+                "Ref": "ApiGatewayResourceHudGreet"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
               }
             }
           },
-          "ApiGatewayMethodHomeOptions": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "AuthorizationType": "NONE",
-              "HttpMethod": "OPTIONS",
-              "MethodResponses": [
-                {
-                  "StatusCode": "200",
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true,
-                    "method.response.header.Access-Control-Allow-Headers": true,
-                    "method.response.header.Access-Control-Allow-Methods": true
-                  },
-                  "ResponseModels": {}
-                }
-              ],
-              "RequestParameters": {},
-              "Integration": {
-                "Type": "MOCK",
-                "RequestTemplates": {
-                  "application/json": "{statusCode:200}"
-                },
-                "ContentHandling": "CONVERT_TO_TEXT",
-                "IntegrationResponses": [
-                  {
-                    "StatusCode": "200",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'",
-                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
-                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
-                    },
-                    "ResponseTemplates": {
-                      "application/json": ""
-                    }
-                  }
-                ]
-              },
-              "ResourceId": {
-                "Ref": "ApiGatewayResourceHome"
-              },
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              }
-            }
-          },
-          "ApiGatewayMethodHomeGreetNameVarOptions": {
+          "ApiGatewayMethodHudGreetNameVarOptions": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "AuthorizationType": "NONE",
@@ -388,7 +367,52 @@
                 ]
               },
               "ResourceId": {
-                "Ref": "ApiGatewayResourceHomeGreetNameVar"
+                "Ref": "ApiGatewayResourceHudGreetNameVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              }
+            }
+          },
+          "ApiGatewayMethodHudPropertiesStatecodeVarOptions": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "AuthorizationType": "NONE",
+              "HttpMethod": "OPTIONS",
+              "MethodResponses": [
+                {
+                  "StatusCode": "200",
+                  "ResponseParameters": {
+                    "method.response.header.Access-Control-Allow-Origin": true,
+                    "method.response.header.Access-Control-Allow-Headers": true,
+                    "method.response.header.Access-Control-Allow-Methods": true
+                  },
+                  "ResponseModels": {}
+                }
+              ],
+              "RequestParameters": {},
+              "Integration": {
+                "Type": "MOCK",
+                "RequestTemplates": {
+                  "application/json": "{statusCode:200}"
+                },
+                "ContentHandling": "CONVERT_TO_TEXT",
+                "IntegrationResponses": [
+                  {
+                    "StatusCode": "200",
+                    "ResponseParameters": {
+                      "method.response.header.Access-Control-Allow-Origin": "'*'",
+                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id'",
+                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET'"
+                    },
+                    "ResponseTemplates": {
+                      "application/json": ""
+                    }
+                  }
+                ]
+              },
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceHudPropertiesStatecodeVar"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
@@ -575,60 +599,13 @@
               }
             }
           },
-          "ApiGatewayMethodHomeGreetGet": {
+          "ApiGatewayMethodHudGreetGet": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "HttpMethod": "GET",
               "RequestParameters": {},
               "ResourceId": {
-                "Ref": "ApiGatewayResourceHomeGreet"
-              },
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "OperationName": "greetHello",
-              "ApiKeyRequired": false,
-              "AuthorizationType": "NONE",
-              "Integration": {
-                "IntegrationHttpMethod": "POST",
-                "Type": "AWS_PROXY",
-                "Uri": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":apigateway:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":lambda:path/2015-03-31/functions/",
-                      {
-                        "Fn::GetAtt": [
-                          "GreeterLambdaFunction",
-                          "Arn"
-                        ]
-                      },
-                      "/invocations"
-                    ]
-                  ]
-                }
-              },
-              "MethodResponses": []
-            },
-            "DependsOn": [
-              "GreeterLambdaPermissionApiGateway"
-            ]
-          },
-          "ApiGatewayMethodHomeGet": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "HttpMethod": "GET",
-              "RequestParameters": {},
-              "ResourceId": {
-                "Ref": "ApiGatewayResourceHome"
+                "Ref": "ApiGatewayResourceHudGreet"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
@@ -669,7 +646,7 @@
               "GreeterLambdaPermissionApiGateway"
             ]
           },
-          "ApiGatewayMethodHomeGreetNameVarGet": {
+          "ApiGatewayMethodHudGreetNameVarGet": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
               "HttpMethod": "GET",
@@ -677,7 +654,7 @@
                 "method.request.path.name": true
               },
               "ResourceId": {
-                "Ref": "ApiGatewayResourceHomeGreetNameVar"
+                "Ref": "ApiGatewayResourceHudGreetNameVar"
               },
               "RestApiId": {
                 "Ref": "ApiGatewayRestApi"
@@ -716,6 +693,53 @@
               "RequestValidatorId": {
                 "Ref": "ApiGatewayRavepadsRequestValidator"
               }
+            },
+            "DependsOn": [
+              "GreeterLambdaPermissionApiGateway"
+            ]
+          },
+          "ApiGatewayMethodHudPropertiesStatecodeVarGet": {
+            "Type": "AWS::ApiGateway::Method",
+            "Properties": {
+              "HttpMethod": "GET",
+              "RequestParameters": {},
+              "ResourceId": {
+                "Ref": "ApiGatewayResourceHudPropertiesStatecodeVar"
+              },
+              "RestApiId": {
+                "Ref": "ApiGatewayRestApi"
+              },
+              "OperationName": "hudDownload",
+              "ApiKeyRequired": false,
+              "AuthorizationType": "NONE",
+              "Integration": {
+                "IntegrationHttpMethod": "POST",
+                "Type": "AWS_PROXY",
+                "Uri": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":apigateway:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":lambda:path/2015-03-31/functions/",
+                      {
+                        "Fn::GetAtt": [
+                          "GreeterLambdaFunction",
+                          "Arn"
+                        ]
+                      },
+                      "/invocations"
+                    ]
+                  ]
+                }
+              },
+              "MethodResponses": []
             },
             "DependsOn": [
               "GreeterLambdaPermissionApiGateway"
@@ -931,7 +955,7 @@
               "Name": "ravepads-dev | Validate request body and querystring parameters"
             }
           },
-          "ApiGatewayDeployment1680783835555": {
+          "ApiGatewayDeployment1684445667461": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -940,16 +964,16 @@
               "StageName": "dev"
             },
             "DependsOn": [
-              "ApiGatewayMethodHomeGreetOptions",
-              "ApiGatewayMethodHomeOptions",
-              "ApiGatewayMethodHomeGreetNameVarOptions",
+              "ApiGatewayMethodHudGreetOptions",
+              "ApiGatewayMethodHudGreetNameVarOptions",
+              "ApiGatewayMethodHudPropertiesStatecodeVarOptions",
               "ApiGatewayMethodAiDashtrainorOptions",
               "ApiGatewayMethodAiDashtrainorRequestDashuploadContenttypeVarFilenameVarOptions",
               "ApiGatewayMethodGridsOptions",
               "ApiGatewayMethodGridsGrididVarRaveOptions",
-              "ApiGatewayMethodHomeGreetGet",
-              "ApiGatewayMethodHomeGet",
-              "ApiGatewayMethodHomeGreetNameVarGet",
+              "ApiGatewayMethodHudGreetGet",
+              "ApiGatewayMethodHudGreetNameVarGet",
+              "ApiGatewayMethodHudPropertiesStatecodeVarGet",
               "ApiGatewayMethodAiDashtrainorGet",
               "ApiGatewayMethodAiDashtrainorRequestDashuploadContenttypeVarFilenameVarGet",
               "ApiGatewayMethodGridsGet",
@@ -992,31 +1016,6 @@
                 ]
               }
             }
-          },
-          "myDynamoDBTable": {
-            "Type": "AWS::DynamoDB::Table",
-            "Properties": {
-              "TableName": "uploaded-files-db",
-              "AttributeDefinitions": [
-                {
-                  "AttributeName": "objectkey",
-                  "AttributeType": "S"
-                }
-              ],
-              "KeySchema": [
-                {
-                  "AttributeName": "objectkey",
-                  "KeyType": "HASH"
-                }
-              ],
-              "BillingMode": "PAY_PER_REQUEST"
-            }
-          },
-          "MyS3Bucket": {
-            "Type": "AWS::S3::Bucket",
-            "Properties": {
-              "BucketName": "ravepads-uploaded-files-bucket"
-            }
           }
         },
         "Outputs": {
@@ -1031,7 +1030,7 @@
           "GreeterLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "GreeterLambdaVersiontxgJBVOL9DE10aSykkYn7gU0SKeVhxZE9uoM7QplpGY"
+              "Ref": "GreeterLambdaVersionP2Yngs2smK4XhdnVYQ0JvdU4VGErRbB5ML6kciQFzGY"
             },
             "Export": {
               "Name": "sls-ravepads-dev-GreeterLambdaFunctionQualifiedArn"
@@ -1154,7 +1153,7 @@
         "dev": {
           "roleEnv": "dev",
           "memorySize": 128,
-          "lambda_role": "arn:aws:iam::336658932923:role/ravepads-lambda-role",
+          "lambda_role": "arn:aws:iam::621709793940:role/ravepads-lambda",
           "environment": {
             "LOG_LEVEL": "INFO"
           }
@@ -1165,36 +1164,11 @@
     "functions": {
       "greeter": {
         "handler": "com.rave.pads.Application",
-        "role": "arn:aws:iam::336658932923:role/ravepads-lambda-role",
+        "role": "arn:aws:iam::621709793940:role/ravepads-lambda",
         "events": [
           {
             "http": {
-              "path": "home/greet",
-              "method": "get",
-              "cors": {
-                "origin": "*",
-                "methods": [
-                  "OPTIONS",
-                  "GET"
-                ],
-                "headers": [
-                  "Content-Type",
-                  "X-Amz-Date",
-                  "Authorization",
-                  "X-Api-Key",
-                  "X-Amz-Security-Token",
-                  "X-Amz-User-Agent",
-                  "X-Amzn-Trace-Id"
-                ],
-                "allowCredentials": false
-              },
-              "operationId": "greetHello",
-              "integration": "AWS_PROXY"
-            }
-          },
-          {
-            "http": {
-              "path": "home",
+              "path": "hud/greet",
               "method": "get",
               "cors": {
                 "origin": "*",
@@ -1219,7 +1193,7 @@
           },
           {
             "http": {
-              "path": "home/greet/{name}",
+              "path": "hud/greet/{name}",
               "method": "get",
               "cors": {
                 "origin": "*",
@@ -1238,6 +1212,31 @@
                 }
               },
               "operationId": "helloName",
+              "integration": "AWS_PROXY"
+            }
+          },
+          {
+            "http": {
+              "path": "hud/properties/{stateCode}",
+              "method": "get",
+              "cors": {
+                "origin": "*",
+                "methods": [
+                  "OPTIONS",
+                  "GET"
+                ],
+                "headers": [
+                  "Content-Type",
+                  "X-Amz-Date",
+                  "Authorization",
+                  "X-Api-Key",
+                  "X-Amz-Security-Token",
+                  "X-Amz-User-Agent",
+                  "X-Amzn-Trace-Id"
+                ],
+                "allowCredentials": false
+              },
+              "operationId": "hudDownload",
               "integration": "AWS_PROXY"
             }
           },
@@ -1353,38 +1352,8 @@
         "timeout": 6,
         "runtime": "java11",
         "vpc": {},
-        "versionLogicalId": "GreeterLambdaVersiontxgJBVOL9DE10aSykkYn7gU0SKeVhxZE9uoM7QplpGY"
+        "versionLogicalId": "GreeterLambdaVersionP2Yngs2smK4XhdnVYQ0JvdU4VGErRbB5ML6kciQFzGY"
       }
-    },
-    "resources": {
-      "Resources": {
-        "myDynamoDBTable": {
-          "Type": "AWS::DynamoDB::Table",
-          "Properties": {
-            "TableName": "uploaded-files-db",
-            "AttributeDefinitions": [
-              {
-                "AttributeName": "objectkey",
-                "AttributeType": "S"
-              }
-            ],
-            "KeySchema": [
-              {
-                "AttributeName": "objectkey",
-                "KeyType": "HASH"
-              }
-            ],
-            "BillingMode": "PAY_PER_REQUEST"
-          }
-        },
-        "MyS3Bucket": {
-          "Type": "AWS::S3::Bucket",
-          "Properties": {
-            "BucketName": "ravepads-uploaded-files-bucket"
-          }
-        }
-      },
-      "Outputs": {}
     },
     "configValidationMode": "warn",
     "serviceFilename": "serverless.yaml",
@@ -1396,13 +1365,10 @@
       "package": {
         "artifact": "target/ravepads-0.1.jar",
         "artifactsS3KeyDirname": "serverless/ravepads/dev/code-artifacts",
-        "artifactDirectoryName": "serverless/ravepads/dev/1680783836467-2023-04-06T12:23:56.467Z"
+        "artifactDirectoryName": "serverless/ravepads/dev/1684445669009-2023-05-18T21:34:29.009Z"
       },
       "custom": {
         "$ref": "$[\"service\"][\"custom\"]"
-      },
-      "resources": {
-        "$ref": "$[\"service\"][\"resources\"]"
       },
       "functions": {
         "$ref": "$[\"service\"][\"functions\"]"
@@ -1412,7 +1378,7 @@
     "isDashboardMonitoringPreconfigured": false
   },
   "package": {
-    "artifactDirectoryName": "serverless/ravepads/dev/1680783836467-2023-04-06T12:23:56.467Z",
+    "artifactDirectoryName": "serverless/ravepads/dev/1684445669009-2023-05-18T21:34:29.009Z",
     "artifact": "target/ravepads-0.1.jar"
   }
 }

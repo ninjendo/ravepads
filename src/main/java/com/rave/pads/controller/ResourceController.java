@@ -1,4 +1,4 @@
-package com.rave.pads;
+package com.rave.pads.controller;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
@@ -27,10 +27,3 @@ public class ResourceController {
     }
 }
 
-//    @Get(uri = "/{gridId}/rave", produces = MediaType.APPLICATION_JSON)
-//    public ScheduleUpdate all(@PathVariable String gridId) {
-//        ScheduleUpdate su = new ScheduleUpdate();
-//        su.setId(gridId);
-//        return su;
-//    }
-//}

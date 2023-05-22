@@ -14,47 +14,44 @@ custom:
     dev:
       roleEnv: 'dev'
       memorySize: 128
-      lambda_role: arn:aws:iam::336658932923:role/ravepads-lambda-role
+      lambda_role: arn:aws:iam::621709793940:role/ravepads-lambda
+      #arn:aws:iam::336658932923:role/ravepads-lambda-role
       #authorizer_arn: arn:aws:lambda:us-west-2:659764204348:function:bfc-authorizer-dev
       environment:
         LOG_LEVEL: INFO
 
-resources:
-  Resources:
-    myDynamoDBTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: uploaded-files-db
-        AttributeDefinitions:
-          - AttributeName: objectkey
-            AttributeType: S
-        KeySchema:
-          - AttributeName: objectkey
-            KeyType: HASH
-        BillingMode: PAY_PER_REQUEST
-    MyS3Bucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: ravepads-uploaded-files-bucket
+#resources:
+#  Resources:
+#    myDynamoDBTable:
+#      Type: AWS::DynamoDB::Table
+#      Properties:
+#        TableName: uploaded-files-db
+#        AttributeDefinitions:
+#          - AttributeName: objectkey
+#            AttributeType: S
+#        KeySchema:
+#          - AttributeName: objectkey
+#            KeyType: HASH
+#        BillingMode: PAY_PER_REQUEST
+#    MyS3Bucket:
+#      Type: AWS::S3::Bucket
+#      Properties:
+#        BucketName: ravepads-uploaded-files-bucket
 
 functions:
   greeter:
     handler: com.rave.pads.Application
     #role: ${self:custom.env.${self:provider.stage}.lambda_role}
-    role: arn:aws:iam::336658932923:role/ravepads-lambda-role
+    role: arn:aws:iam::621709793940:role/ravepads-lambda
+    #arn:aws:iam::336658932923:role/ravepads-lambda-role
     events:
       - http:
-          path: home/greet
-          method: GET # Http metodod [GET,POST,etc]
-          cors: true # allows cors
-          operationId: greetHello
-      - http:
-          path: home
+          path: hud/greet
           method: GET # Http metodod [GET,POST,etc]
           cors: true # allows cors
           operationId: greetHome
       - http:
-          path: home/greet/{name}
+          path: hud/greet/{name}
           method: GET
           cors:
             headers: '*'
@@ -63,6 +60,11 @@ functions:
               paths:
                 name: true
           operationId: helloName
+      - http:
+          path: hud/properties/{stateCode}
+          method: GET # Http metodod [GET,POST,etc]
+          cors: true # allows cors
+          operationId: hudDownload
       - http:
           path: ai-trainor
           method: GET # Http metodod [GET,POST,etc]
@@ -79,12 +81,6 @@ functions:
                 contentType: true
                 fileName: true
           operationId: requestUpload
-#  uar_resource:
-#    handler: com.rave.pads.Application
-#    #role: ${self:custom.env.${self:provider.stage}.lambda_role}
-#    role: arn:aws:iam::232900052464:role/RaveFormsRaveLambdaRole
-#    events:
-#      - httpApi: 'GET /grids/{gridId}/Rave'
       - http:
           path: grids
           method: GET # Http metodod [GET,POST,etc]

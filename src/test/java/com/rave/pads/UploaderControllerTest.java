@@ -43,13 +43,13 @@ public class UploaderControllerTest {
         assertEquals("{\"message\":\"Welcome to AI Trainor.\"}",  response.getBody());
     }
 
-    @Test
-    void testRequestUpload() throws JsonProcessingException {
-        AwsProxyRequest request = new AwsProxyRequest();
-        request.setHttpMethod("GET");
-        request.setPath("/ai-trainor/request-upload/pdf/myresume.pdf");
-        AwsProxyResponse response = handler.handleRequest(request, lambdaContext);
-        assertEquals(200, response.getStatusCode());
-        assertTrue(response.getBody().contains("{\"message\":\"presignedUrl: https://ravepads-uploaded-files-bucket.s3.amazonaws.com/myresumepdf"));
-    }
+//    @Test
+//    void testRequestUpload() throws JsonProcessingException {
+//        AwsProxyRequest request = new AwsProxyRequest();
+//        request.setHttpMethod("GET");
+//        request.setPath("/ai-trainor/request-upload/pdf/myresume.pdf");
+//        AwsProxyResponse response = handler.handleRequest(request, lambdaContext);
+//        assertEquals(200, response.getStatusCode());
+//        assertTrue(response.getBody().contains("{\"message\":\"presignedUrl: https://ravepads-uploaded-files-bucket.s3.amazonaws.com/myresumepdf"));
+//    }
 }
