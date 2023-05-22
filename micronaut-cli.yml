@@ -1,0 +1,6 @@
+applicationType: default
+defaultPackage: com.rave.pads
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [amazon-api-gateway, annotation-api, app-name, aws-lambda, jackson-databind, java, java-application, junit, logback, maven, readme, shade, yaml]

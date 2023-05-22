@@ -1,0 +1,22 @@
+image: sleavely/node-awscli:14.x
+
+stages:
+  - package
+  - deploy
+
+mvn_build:
+  stage: package
+  image: maven:3.8-jdk-11
+  script: "mvn package shade:shade"
+  artifacts:
+    paths:
+      - target/serverlessuar-0.1.jar
+
+production:
+  stage: deploy
+  before_script:
+    - npm config set prefix /usr/local
+    - npm install -g serverless
+  script:
+    - serverless deploy --stage dev --verbose
+  environment: dev
