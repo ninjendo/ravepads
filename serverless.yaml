@@ -5,7 +5,24 @@ provider:
   runtime: java11
   stage: ${opt:stage, 'dev'}
   region: us-east-1
-
+  logs:
+    restApi: true
+    role: arn:aws:iam::621709793940:role/rave-api-gteway-role
+  apiGateway:
+    shouldStartNameWithService: true
+    binaryMediaTypes:
+      - 'multipart/form-data'
+    apiKeys:
+      - basic:
+          - basicPlanKey
+    usagePlan:
+      - basic:
+          quota:
+            limit: 100
+            period: MONTH
+          throttle:
+            rateLimit: 5
+            burstLimit: 20
 package:
   artifact: target/ravepads-0.1.jar
 
@@ -15,60 +32,25 @@ custom:
       roleEnv: 'dev'
       memorySize: 128
       lambda_role: arn:aws:iam::621709793940:role/ravepads-lambda
-      #arn:aws:iam::336658932923:role/ravepads-lambda-role
       #authorizer_arn: arn:aws:lambda:us-west-2:659764204348:function:bfc-authorizer-dev
       environment:
         LOG_LEVEL: INFO
 
-#resources:
-#  Resources:
-#    myDynamoDBTable:
-#      Type: AWS::DynamoDB::Table
-#      Properties:
-#        TableName: uploaded-files-db
-#        AttributeDefinitions:
-#          - AttributeName: objectkey
-#            AttributeType: S
-#        KeySchema:
-#          - AttributeName: objectkey
-#            KeyType: HASH
-#        BillingMode: PAY_PER_REQUEST
-#    MyS3Bucket:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: ravepads-uploaded-files-bucket
-
 functions:
   greeter:
     handler: com.rave.pads.Application
-    #role: ${self:custom.env.${self:provider.stage}.lambda_role}
-    role: arn:aws:iam::621709793940:role/ravepads-lambda
-    #arn:aws:iam::336658932923:role/ravepads-lambda-role
+    role: ${self:custom.env.${self:provider.stage}.lambda_role}
     events:
       - http:
-          path: hud/greet
-          method: GET # Http metodod [GET,POST,etc]
-          cors: true # allows cors
-          operationId: greetHome
-      - http:
-          path: hud/greet/{name}
-          method: GET
-          cors:
-            headers: '*'
-          request:
-            parameters:
-              paths:
-                name: true
-          operationId: helloName
-      - http:
           path: hud/properties/{stateCode}
-          method: GET # Http metodod [GET,POST,etc]
-          cors: true # allows cors
+          method: GET
+          cors: true
           operationId: hudDownload
+          private: true
       - http:
           path: ai-trainor
-          method: GET # Http metodod [GET,POST,etc]
-          cors: true # allows cors
+          method: GET
+          cors: true
           operationId: aiTrainorHome
       - http:
           path: ai-trainor/request-upload/{contentType}/{fileName}
@@ -81,17 +63,5 @@ functions:
                 contentType: true
                 fileName: true
           operationId: requestUpload
-      - http:
-          path: grids
-          method: GET # Http metodod [GET,POST,etc]
-          cors: true # allows cors
-          operationId: allGrids
-      - http:
-          path: grids/{gridId}/Rave
-          method: ANY
-          cors: true
-          request:
-            parameters:
-              paths:
-                gridId: true
-          operationId: getAllRave
+          private: true
+
